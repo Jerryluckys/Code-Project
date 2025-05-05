@@ -9,351 +9,1156 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .shop-hero {
+            background-color: #FFF5F9;
+            padding: 6rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shop-hero h1 {
+            font-size: 3.5rem;
+            color: #43273A;
+            margin-bottom: 1rem;
+        }
+
+        .shop-hero .highlight {
+            color: #BE70A7;
+        }
+
+        .shop-hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .category-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-header h2 {
+            font-size: 2rem;
+            color: #43273A;
+        }
+
+        .category-header .highlight {
+            color: #BE70A7;
+        }
+
+        .category-header .view-all {
+            color: #43273A;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .category-header .view-all i {
+            margin-left: 0.5rem;
+        }
+
+        .category-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-content h3 {
+            color: #43273A;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .price .original {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .price .discounted {
+            color: #BE70A7;
+            font-weight: 600;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quantity-control button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #43273A;
+        }
+
+        .quantity-control input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.25rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #43273A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #BE70A7;
+        }
+
+        @media (max-width: 768px) {
+            .shop-hero {
+                padding: 4rem 2rem;
+            }
+
+            .shop-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .category-products {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .filters-section {
+            background-color: #FFF5F9;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group h3 {
+            color: #43273A;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dropdown-filter {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #FFF5F9;
+            border: 1px solid #43273A;
+            border-radius: 5px;
+            color: #43273A;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            z-index: 1;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content label {
+            display: block;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content label:hover {
+            background-color: #FFF5F9;
+        }
+
+        .submit-categories {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #43273A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .submit-categories:hover {
+            background-color: #BE70A7;
+        }
+
+        .price-range {
+            padding: 1rem;
+        }
+
+        .price-range-slider {
+            width: 100%;
+            height: 5px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .price-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #BE70A7;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .price-range-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            color: #43273A;
+        }
+
+        .custom-bouquet-options {
+            padding: 0.5rem;
+        }
+
+        .custom-bouquet-options h4 {
+            color: #43273A;
+            margin-bottom: 0.5rem;
+        }
+
+        .flower-options {
+            margin-bottom: 1rem;
+        }
+
+        .quantity-selection {
+            margin-bottom: 1rem;
+        }
+
+        .quantity-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #43273A;
+            background: #FFF5F9;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quantity-input input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.25rem;
+        }
+
+        .create-bouquet-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #43273A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-bouquet-btn:hover {
+            background-color: #BE70A7;
+        }
+
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: static;
+                border: none;
+            }
+        }
+
+        .compact-filters {
+            background: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        .compact-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 0.5rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        .compact-filter-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .dropdown-btn {
+            background: none;
+            border: 1.5px solid #E0E0E0;
+            color: #43273A;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            padding: 0.3rem 0.7rem;
+            border-radius: 7px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .dropdown-btn:hover, .dropdown-btn.active {
+            background: #FFF5F9;
+            border-color: #BE70A7;
+        }
+        .dropdown-btn i.fas.fa-chevron-down {
+            font-size: 0.9em;
+            margin-left: 0.2em;
+            transition: transform 0.3s;
+        }
+        .dropdown-btn.active i.fas.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            min-width: 200px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 10;
+            padding: 0.7rem 1rem;
+            margin-top: 0.2rem;
+        }
+        .dropdown-content.show {
+            display: block;
+        }
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0;
+            color: #43273A;
+            font-size: 0.97rem;
+            cursor: pointer;
+        }
+        .filter-option input[type="checkbox"],
+        .filter-option input[type="radio"] {
+            accent-color: #BE70A7;
+        }
+        .price-dropdown {
+            min-width: 220px;
+        }
+        .price-range {
+            padding: 0.2rem 0;
+        }
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .custom-bouquet-options h4 {
+            margin: 0.5rem 0 0.2rem 0;
+            font-size: 1rem;
+            color: #43273A;
+        }
+        .flower-options {
+            margin-bottom: 0.7rem;
+        }
+        .quantity-selection {
+            margin-bottom: 0.7rem;
+        }
+        .quantity-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #43273A;
+            background: #FFF5F9;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .quantity-input input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.2rem;
+        }
+        .create-bouquet-btn {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #43273A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .create-bouquet-btn:hover {
+            background-color: #BE70A7;
+        }
+        @media (max-width: 900px) {
+            .compact-filter-bar {
+                gap: 0.7rem;
+                padding: 0.5rem 0.3rem;
+            }
+            .dropdown-content {
+                min-width: 160px;
+                padding: 0.5rem 0.7rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .compact-filter-bar {
+                flex-wrap: wrap;
+                gap: 0.3rem;
+            }
+            .dropdown-content {
+                position: static;
+                min-width: 100%;
+                box-shadow: none;
+            }
+        }
+    </style>
 </head>
 <body>
-<section class="featured-flowers">
-    <div class="section-header">
-        <h2 class="playfair-font">Featured <span class="highlight">Flowers</span></h2>
-        <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
-    </div>
-    <div class="featured-cards">
-        <button class="nav-arrow prev"><i class="fas fa-chevron-left"></i></button>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="Assets/Images/Navigation/Logo.png" alt="FFOA Logo">
+        </div>
         
-        <!-- First Card -->
-        <div class="card">
-            <div class="flower-image">
-                <img src="Assets/Images/Body/Featured/First Card.png" alt="First Card Bouquet">
-            </div>
-            <h3>Lily Lane</h3>
-            <p>A delicate blend of lilies, roses, chrysanthemums, and baby's breath, framed by fresh greenery for timeless beauty.</p>
-            <div class="price">
-                <span class="original">R348.00</span>
-                <span class="discounted">R240.00</span>
-            </div>
-            <div class="quantity-control">
-                <button class="decrease"><i class="fas fa-minus"></i></button>
-                <input type="number" value="1" min="1" class="quantity-input">
-                <button class="increase"><i class="fas fa-plus"></i></button>
-            </div>
-            <button class="add-to-cart" data-id="lily-lane" data-name="Lily Lane" data-price="240.00" data-image="Assets/Images/Body/Featured/First Card.png">
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="shop.html" class="active">SHOP</a></li>
+            <li><a href="about.html">ABOUT US</a></li>
+            <li><a href="blog.html">BLOGS</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="#" class="icon-btn">
+                <i class="fas fa-search"></i>
+            </a>
+            <a href="#" class="icon-btn">
+                <i class="fas fa-user"></i>
+            </a>
+            <a href="cart.html" class="icon-btn">
                 <i class="fas fa-shopping-cart"></i>
-            </button>
+            </a>
         </div>
+    </nav>
 
-        <!-- Second Card -->
-        <div class="card">
-            <div class="flower-image">
-                <img src="Assets/Images/Body/Featured/Second Card.png" alt="Second Card Bouquet">
+    <section class="shop-hero">
+        <h1>Our <span class="highlight">Collections</span></h1>
+        <p>Discover our exquisite floral arrangements for every occasion, crafted with care and passion.</p>
+    </section>
+
+    <div class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group">
+                <h3>Categories</h3>
+                <div class="dropdown-filter">
+                    <button class="dropdown-btn" onclick="toggleDropdown('categoryDropdown')">
+                        Select Category
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="categoryDropdown">
+                        <label><input type="checkbox" value="mothers-day"> Mother's Day</label>
+                        <label><input type="checkbox" value="weddings"> Weddings</label>
+                        <label><input type="checkbox" value="anniversaries"> Anniversaries</label>
+                        <label><input type="checkbox" value="funerals"> Funerals</label>
+                        <label><input type="checkbox" value="friendship"> Friendship</label>
+                        <label><input type="checkbox" value="new-beginnings"> New Beginnings</label>
+                        <label><input type="checkbox" value="success"> Success</label>
+                        <label><input type="checkbox" value="celebrations"> Celebrations</label>
+                        <button class="submit-categories" onclick="filterProducts()">Apply Filters</button>
+                    </div>
+                </div>
             </div>
-            <h3>Daisy Dreams</h3>
-            <p>A lively bouquet of colorful daisies with pink, purple, yellow, and peach petals, beautifully arranged against white.</p>
-            <div class="price">
-                <span class="original">R110.00</span>
-                <span class="discounted">R90.00</span>
+
+            <div class="filter-group">
+                <h3>Price Range</h3>
+                <div class="price-range">
+                    <input type="range" class="price-range-slider" id="priceRange" min="0" max="1000" step="10" value="1000">
+                    <div class="price-range-values">
+                        <span id="minPrice">R0</span>
+                        <span id="maxPrice">R1000</span>
+                    </div>
+                </div>
             </div>
-            <div class="quantity-control">
-                <button class="decrease"><i class="fas fa-minus"></i></button>
-                <input type="number" value="1" min="1" class="quantity-input">
-                <button class="increase"><i class="fas fa-plus"></i></button>
+
+            <div class="filter-group">
+                <h3>Flower Type</h3>
+                <div class="dropdown-filter">
+                    <button class="dropdown-btn" onclick="toggleDropdown('flowerTypeDropdown')">
+                        Select Flower Type
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="flowerTypeDropdown">
+                        <label><input type="checkbox" value="roses"> Roses</label>
+                        <label><input type="checkbox" value="lilies"> Lilies</label>
+                        <label><input type="checkbox" value="sunflowers"> Sunflowers</label>
+                        <label><input type="checkbox" value="orchids"> Orchids</label>
+                        <label><input type="checkbox" value="daisies"> Daisies</label>
+                        <label><input type="checkbox" value="mixed"> Mixed</label>
+                    </div>
+                </div>
             </div>
-            <button class="add-to-cart" data-id="daisy-dreams" data-name="Daisy Dreams" data-price="90.00" data-image="Assets/Images/Body/Featured/Second Card.png">
-                <i class="fas fa-shopping-cart"></i>
-            </button>
+
+            <div class="filter-group">
+                <h3>Custom Bouquet</h3>
+                <div class="dropdown-filter">
+                    <button class="dropdown-btn" onclick="toggleDropdown('customBouquetDropdown')">
+                        Create Custom Bouquet
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="customBouquetDropdown">
+                        <div class="custom-bouquet-options">
+                            <div class="flower-selection">
+                                <h4>Select Flowers</h4>
+                                <div class="flower-options">
+                                    <label><input type="checkbox" name="custom-roses" value="roses"> Roses (R25 each)</label>
+                                    <label><input type="checkbox" name="custom-lilies" value="lilies"> Lilies (R30 each)</label>
+                                    <label><input type="checkbox" name="custom-sunflowers" value="sunflowers"> Sunflowers (R20 each)</label>
+                                    <label><input type="checkbox" name="custom-orchids" value="orchids"> Orchids (R35 each)</label>
+                                </div>
+                            </div>
+                            <div class="quantity-selection">
+                                <h4>Quantity</h4>
+                                <div class="quantity-input">
+                                    <button class="quantity-btn decrease">-</button>
+                                    <input type="number" value="1" min="1" max="12">
+                                    <button class="quantity-btn increase">+</button>
+                                </div>
+                            </div>
+                            <button class="create-bouquet-btn">Create Bouquet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Third Card -->
-        <div class="card">
-            <div class="flower-image">
-                <img src="Assets/Images/Body/Featured/Third Card.png" alt="Third Card Bouquet">
-            </div>
-            <h3>Rose Varieties</h3>
-            <p>A vibrant bouquet of red, yellow, and peach roses, beautifully arranged with lush green leaves on white.</p>
-            <div class="price">
-                <span class="original">R245.00</span>
-                <span class="discounted">R179.00</span>
-            </div>
-            <div class="quantity-control">
-                <button class="decrease"><i class="fas fa-minus"></i></button>
-                <input type="number" value="1" min="1" class="quantity-input">
-                <button class="increase"><i class="fas fa-plus"></i></button>
-            </div>
-            <button class="add-to-cart" data-id="rose-varieties" data-name="Rose Varieties" data-price="179.00" data-image="Assets/Images/Body/Featured/Third Card.png">
-                <i class="fas fa-shopping-cart"></i>
-            </button>
-        </div>
-
-        <button class="nav-arrow next"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <!-- Cart Display (Initially Hidden) -->
-    <div id="cart-notification" class="cart-notification">
-        <div class="cart-header">
-            <h3>Shopping Cart</h3>
-            <button id="close-cart"><i class="fas fa-times"></i></button>
+    <section class="category-section">
+        <div class="category-header">
+            <h2>For <span class="highlight">Mother's Day</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
         </div>
-        <div id="cart-items" class="cart-items">
-            <!-- Cart items will be added here dynamically -->
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total-amount">R0.00</span>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/mothers-day-1.jpg" alt="Mother's Day Bouquet">
+                </div>
+                <div class="product-content">
+                    <h3>Mother's Love</h3>
+                    <p>A beautiful arrangement of pink roses and lilies, perfect for showing your appreciation.</p>
+                    <div class="price">
+                        <span class="original">R350.00</span>
+                        <span class="discounted">R299.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
             </div>
-            <button id="checkout-btn" class="checkout-btn">Checkout</button>
+            <!-- Add more Mother's Day products here -->
         </div>
-    </div>
-</section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize cart
-        let cart = JSON.parse(localStorage.getItem('flowerShopCart')) || [];
-        
-        // Quantity control functionality
-        const decreaseButtons = document.querySelectorAll('.decrease');
-        const increaseButtons = document.querySelectorAll('.increase');
-        const quantityInputs = document.querySelectorAll('.quantity-input');
-        const addToCartButtons = document.querySelectorAll('.add-to-cart');
-        
-        // Handle decrease button clicks
-        decreaseButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.parentNode.querySelector('.quantity-input');
-                let value = parseInt(input.value);
-                if (value > 1) {
-                    input.value = value - 1;
-                }
+        <div class="category-header">
+            <h2>For <span class="highlight">Weddings</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/wedding-1.jpg" alt="Wedding Bouquet">
+                </div>
+                <div class="product-content">
+                    <h3>Bridal Elegance</h3>
+                    <p>An exquisite white rose bouquet with delicate baby's breath accents.</p>
+                    <div class="price">
+                        <span class="original">R450.00</span>
+                        <span class="discounted">R399.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more Wedding products here -->
+        </div>
+
+        <div class="category-header">
+            <h2>For <span class="highlight">Anniversaries</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/anniversary-1.jpg" alt="Anniversary Bouquet">
+                </div>
+                <div class="product-content">
+                    <h3>Timeless Love</h3>
+                    <p>A romantic arrangement of red roses and white lilies, symbolizing eternal love.</p>
+                    <div class="price">
+                        <span class="original">R380.00</span>
+                        <span class="discounted">R329.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more Anniversary products here -->
+        </div>
+
+        <div class="category-header">
+            <h2>For <span class="highlight">Funerals</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/funeral-1.jpg" alt="Funeral Arrangement">
+                </div>
+                <div class="product-content">
+                    <h3>Eternal Peace</h3>
+                    <p>A serene arrangement of white lilies and roses, expressing sympathy and remembrance.</p>
+                    <div class="price">
+                        <span class="original">R420.00</span>
+                        <span class="discounted">R380.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more Funeral products here -->
+        </div>
+
+        <div class="category-header">
+            <h2>For <span class="highlight">Friendship</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/friendship-1.jpg" alt="Friendship Bouquet">
+                </div>
+                <div class="product-content">
+                    <h3>Forever Friends</h3>
+                    <p>A vibrant mix of sunflowers and daisies, celebrating the joy of friendship.</p>
+                    <div class="price">
+                        <span class="original">R280.00</span>
+                        <span class="discounted">R250.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more Friendship products here -->
+        </div>
+
+        <div class="category-header">
+            <h2>For <span class="highlight">New Beginnings</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/new-beginnings-1.jpg" alt="New Beginnings Arrangement">
+                </div>
+                <div class="product-content">
+                    <h3>Fresh Start</h3>
+                    <p>A bright arrangement of mixed spring flowers, perfect for new chapters in life.</p>
+                    <div class="price">
+                        <span class="original">R320.00</span>
+                        <span class="discounted">R290.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more New Beginnings products here -->
+        </div>
+
+        <div class="category-header">
+            <h2>For <span class="highlight">Success</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/success-1.jpg" alt="Success Arrangement">
+                </div>
+                <div class="product-content">
+                    <h3>Achievement</h3>
+                    <p>An elegant arrangement of orchids and roses, celebrating accomplishments and milestones.</p>
+                    <div class="price">
+                        <span class="original">R380.00</span>
+                        <span class="discounted">R350.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more Success products here -->
+        </div>
+
+        <div class="category-header">
+            <h2>For <span class="highlight">Celebrations</span></h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="category-products">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Assets/Images/Shop/celebration-1.jpg" alt="Celebration Arrangement">
+                </div>
+                <div class="product-content">
+                    <h3>Party Time</h3>
+                    <p>A festive mix of colorful flowers, perfect for any celebration or special occasion.</p>
+                    <div class="price">
+                        <span class="original">R340.00</span>
+                        <span class="discounted">R310.00</span>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="decrease"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="increase"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <button class="add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                </div>
+            </div>
+            <!-- Add more Celebration products here -->
+        </div>
+    </section>
+
+    <footer class="footer">
+        <!-- Footer will be loaded dynamically -->
+    </footer>
+
+    <script src="include-footer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle dropdown filters
+            window.toggleDropdown = function(id) {
+                document.getElementById(id).classList.toggle('show');
+                const button = document.querySelector(`[onclick="toggleDropdown('${id}')"]`);
+                button.classList.toggle('active');
+            };
+
+            // Price range slider
+            const priceRange = document.getElementById('priceRange');
+            const minPrice = document.getElementById('minPrice');
+            const maxPrice = document.getElementById('maxPrice');
+
+            priceRange.addEventListener('input', function() {
+                maxPrice.textContent = 'R' + this.value;
             });
-        });
-        
-        // Handle increase button clicks
-        increaseButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const input = this.parentNode.querySelector('.quantity-input');
-                let value = parseInt(input.value);
-                input.value = value + 1;
-            });
-        });
-        
-        // Handle direct input changes
-        quantityInputs.forEach(input => {
-            input.addEventListener('change', function() {
-                if (parseInt(this.value) < 1 || isNaN(parseInt(this.value))) {
-                    this.value = 1;
-                }
-            });
-        });
-        
-        // Add to cart functionality
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Get product details
-                const card = this.closest('.card');
-                const id = this.getAttribute('data-id');
-                const name = this.getAttribute('data-name');
-                const price = parseFloat(this.getAttribute('data-price'));
-                const image = this.getAttribute('data-image');
-                const quantity = parseInt(card.querySelector('.quantity-input').value);
-                
-                // Check if item already exists in cart
-                const existingItemIndex = cart.findIndex(item => item.id === id);
-                
-                if (existingItemIndex !== -1) {
-                    // Update quantity if item exists
-                    cart[existingItemIndex].quantity += quantity;
-                } else {
-                    // Add new item if it doesn't exist
-                    cart.push({
-                        id,
-                        name,
-                        price,
-                        image,
-                        quantity
-                    });
-                }
-                
-                // Save cart to local storage
-                localStorage.setItem('flowerShopCart', JSON.stringify(cart));
-                
-                // Show cart notification
-                showCartNotification(name, quantity);
-                
-                // Reset quantity to 1
-                card.querySelector('.quantity-input').value = 1;
-                
-                // Update cart display
-                updateCartDisplay();
-                
-                // Show cart panel on mobile
-                if (window.innerWidth <= 768) {
-                    cartNotification.classList.add('show');
-                }
-            });
-        });
-        
-        // Show cart notification
-        function showCartNotification(productName, quantity) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.classList.add('add-to-cart-notification');
-            notification.innerHTML = `
-                <i class="fas fa-check-circle"></i>
-                <p>${quantity} x ${productName} added to cart</p>
-            `;
+
+            // Initialize quantity controls for all products
+            initializeQuantityControls();
             
-            // Append to body
-            document.body.appendChild(notification);
+            // Initialize add to cart functionality
+            initializeAddToCart();
             
-            // Remove after animation
-            setTimeout(() => {
-                notification.classList.add('show');
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 2000);
-            }, 10);
+            // Show cart count on load
+            updateCartCount();
+        });
+
+        // Function to filter products (placeholder)
+        function filterProducts() {
+            // Implementation for product filtering
+            console.log('Filtering products...');
+            // Close dropdown after filtering
+            document.getElementById('categoryDropdown').classList.remove('show');
+        }
+
+        // Function to initialize quantity controls
+        function initializeQuantityControls() {
+            const quantityControls = document.querySelectorAll('.quantity-control');
+            
+            quantityControls.forEach(control => {
+                const decreaseBtn = control.querySelector('.decrease');
+                const increaseBtn = control.querySelector('.increase');
+                const input = control.querySelector('input');
+                
+                if (!decreaseBtn || !increaseBtn || !input) return;
+                
+                decreaseBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(input.value);
+                    if (currentValue > 1) {
+                        input.value = currentValue - 1;
+                    }
+                });
+                
+                increaseBtn.addEventListener('click', () => {
+                    const currentValue = parseInt(input.value);
+                    input.value = currentValue + 1;
+                });
+            });
+            
+            // Also handle custom bouquet quantity controls
+            const customDecrease = document.querySelector('.custom-bouquet-options .decrease');
+            const customIncrease = document.querySelector('.custom-bouquet-options .increase');
+            const customInput = document.querySelector('.custom-bouquet-options input[type="number"]');
+            
+            if (customDecrease && customIncrease && customInput) {
+                customDecrease.addEventListener('click', () => {
+                    const currentValue = parseInt(customInput.value);
+                    if (currentValue > 1) {
+                        customInput.value = currentValue - 1;
+                    }
+                });
+                
+                customIncrease.addEventListener('click', () => {
+                    const currentValue = parseInt(customInput.value);
+                    if (currentValue < parseInt(customInput.max)) {
+                        customInput.value = currentValue + 1;
+                    }
+                });
+            }
         }
         
-        // Cart display functionality
-        const cartNotification = document.getElementById('cart-notification');
-        const cartItems = document.getElementById('cart-items');
-        const cartTotalAmount = document.getElementById('cart-total-amount');
-        const closeCartButton = document.getElementById('close-cart');
-        const checkoutButton = document.getElementById('checkout-btn');
-        
-        // Update cart display
-        function updateCartDisplay() {
-            // Clear current items
-            cartItems.innerHTML = '';
+        // Function to initialize add to cart functionality
+        function initializeAddToCart() {
+            // Add data attributes to all products first
+            setupProductDataAttributes();
             
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
-                cartTotalAmount.textContent = 'R0.00';
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const card = button.closest('.product-card') || button.closest('.card');
+                    if (!card) return;
+                    
+                    const quantityInput = card.querySelector('input[type="number"]');
+                    if (!quantityInput) return;
+                    
+                    const quantity = parseInt(quantityInput.value);
+                    
+                    // Get product data from data attributes
+                    const productId = button.getAttribute('data-id');
+                    const productName = button.getAttribute('data-name');
+                    const productPrice = parseFloat(button.getAttribute('data-price'));
+                    const productImage = button.getAttribute('data-image');
+                    
+                    if (!productId || !productName || !productPrice || !productImage) {
+                        console.error('Missing product data attributes');
+                        return;
+                    }
+                    
+                    // Check if item already in cart
+                    const existingItemIndex = cartItems.findIndex(item => item.id === productId);
+                    
+                    if (existingItemIndex > -1) {
+                        // Update quantity if already in cart
+                        cartItems[existingItemIndex].quantity += quantity;
+                    } else {
+                        // Add new item to cart
+                        cartItems.push({
+                            id: productId,
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: quantity
+                        });
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                    
+                    // Update cart count
+                    updateCartCount();
+                    
+                    // Visual feedback
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check"></i> Added!';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+            
+            // Setup Create Bouquet button
+            const createBouquetBtn = document.querySelector('.create-bouquet-btn');
+            if (createBouquetBtn) {
+                createBouquetBtn.addEventListener('click', createCustomBouquet);
+            }
+        }
+        
+        // Add data attributes to all product cards based on their content
+        function setupProductDataAttributes() {
+            const productCards = document.querySelectorAll('.product-card');
+            
+            productCards.forEach((card, index) => {
+                const title = card.querySelector('h3')?.textContent || 'Product';
+                const priceElement = card.querySelector('.discounted')?.textContent || '';
+                const price = priceElement.replace('R', '').trim();
+                const imgElement = card.querySelector('.product-image img');
+                const imgSrc = imgElement ? imgElement.getAttribute('src') : '';
+                
+                // Generate a unique ID from the title
+                const id = title.toLowerCase().replace(/\s+/g, '-') + '-' + index;
+                
+                const addButton = card.querySelector('.add-to-cart');
+                if (addButton) {
+                    addButton.setAttribute('data-id', id);
+                    addButton.setAttribute('data-name', title);
+                    addButton.setAttribute('data-price', price);
+                    addButton.setAttribute('data-image', imgSrc);
+                }
+            });
+        }
+        
+        // Function to create custom bouquet
+        function createCustomBouquet() {
+            const bouquetOptions = document.querySelector('.custom-bouquet-options');
+            if (!bouquetOptions) return;
+            
+            const selectedFlowers = bouquetOptions.querySelectorAll('input[type="checkbox"]:checked');
+            const quantity = parseInt(bouquetOptions.querySelector('input[type="number"]').value) || 1;
+            
+            if (selectedFlowers.length === 0) {
+                alert('Please select at least one flower type');
                 return;
             }
             
-            // Calculate total
-            let total = 0;
+            // Calculate price and build description
+            let totalPrice = 0;
+            let description = 'Custom bouquet with ';
+            let flowerList = [];
             
-            // Add items to display
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
+            selectedFlowers.forEach(flower => {
+                const flowerName = flower.value;
+                let flowerPrice = 0;
                 
-                const itemElement = document.createElement('div');
-                itemElement.classList.add('cart-item');
-                itemElement.innerHTML = `
-                    <div class="cart-item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="cart-item-details">
-                        <h4>${item.name}</h4>
-                        <div class="cart-item-price">
-                            <span>R${item.price.toFixed(2)} x ${item.quantity}</span>
-                            <span>R${itemTotal.toFixed(2)}</span>
-                        </div>
-                    </div>
-                    <button class="remove-item" data-index="${index}">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                `;
+                // Get price from label text
+                const label = flower.closest('label');
+                const priceMatch = label.textContent.match(/R(\d+)/);
+                if (priceMatch) {
+                    flowerPrice = parseInt(priceMatch[1]);
+                }
                 
-                cartItems.appendChild(itemElement);
+                totalPrice += flowerPrice * quantity;
+                flowerList.push(flowerName);
             });
             
-            // Update total
-            cartTotalAmount.textContent = `R${total.toFixed(2)}`;
+            // Format the description
+            description += flowerList.join(', ');
             
-            // Add event listeners to remove buttons
-            document.querySelectorAll('.remove-item').forEach(button => {
-                button.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    cart.splice(index, 1);
-                    localStorage.setItem('flowerShopCart', JSON.stringify(cart));
-                    updateCartDisplay();
-                });
+            // Create cart item
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const timestamp = new Date().getTime();
+            
+            cartItems.push({
+                id: 'custom-bouquet-' + timestamp,
+                name: 'Custom Bouquet',
+                price: totalPrice,
+                image: 'Assets/Images/Shop/custom-bouquet.jpg', // You need a default image
+                quantity: 1,
+                description: description
             });
-        }
-        
-        // Event listeners for cart display
-        closeCartButton.addEventListener('click', function() {
-            cartNotification.classList.remove('show');
-        });
-        
-        checkoutButton.addEventListener('click', function() {
-            alert('Proceeding to checkout with ' + cart.length + ' items.');
-            // Here you would typically redirect to a checkout page
-        });
-        
-        // Carousel navigation
-        const prevButton = document.querySelector('.nav-arrow.prev');
-        const nextButton = document.querySelector('.nav-arrow.next');
-        const featuredCards = document.querySelector('.featured-cards');
-        const cards = document.querySelectorAll('.card');
-        
-        // Determine number of visible cards based on screen width
-        function getVisibleCardCount() {
-            if (window.innerWidth >= 1200) return 3; // Desktop: 3 cards
-            if (window.innerWidth >= 768) return 2;  // Tablet: 2 cards
-            return 1; // Mobile: 1 card
-        }
-        
-        let currentPosition = 0;
-        
-        function updateCarousel() {
-            const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginRight);
-            const visibleCards = getVisibleCardCount();
-            const maxPosition = Math.max(0, (cards.length - visibleCards)) * cardWidth;
             
-            // Ensure current position is valid
-            currentPosition = Math.min(currentPosition, maxPosition);
+            // Save to localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
             
-            // Apply transform
-            featuredCards.style.transform = `translateX(-${currentPosition}px)`;
+            // Update cart count
+            updateCartCount();
             
-            // Update button states
-            prevButton.disabled = currentPosition === 0;
-            nextButton.disabled = currentPosition >= maxPosition;
+            // Visual feedback
+            alert('Custom bouquet added to cart!');
             
-            prevButton.style.opacity = prevButton.disabled ? '0.5' : '1';
-            nextButton.style.opacity = nextButton.disabled ? '0.5' : '1';
-        }
-        
-        prevButton.addEventListener('click', function() {
-            const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginRight);
-            currentPosition = Math.max(0, currentPosition - cardWidth);
-            updateCarousel();
-        });
-        
-        nextButton.addEventListener('click', function() {
-            const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginRight);
-            const visibleCards = getVisibleCardCount();
-            const maxPosition = (cards.length - visibleCards) * cardWidth;
-            currentPosition = Math.min(maxPosition, currentPosition + cardWidth);
-            updateCarousel();
-        });
-        
-        // Handle window resize
-        window.addEventListener('resize', updateCarousel);
-        
-        // Show "View Cart" button on mobile
-        if (window.innerWidth <= 768) {
-            const viewCartButton = document.createElement('button');
-            viewCartButton.classList.add('view-cart-mobile');
-            viewCartButton.innerHTML = '<i class="fas fa-shopping-cart"></i> View Cart';
-            document.querySelector('.featured-flowers').appendChild(viewCartButton);
-            
-            viewCartButton.addEventListener('click', function() {
-                cartNotification.classList.add('show');
+            // Reset form
+            selectedFlowers.forEach(flower => {
+                flower.checked = false;
             });
+            bouquetOptions.querySelector('input[type="number"]').value = 1;
+            
+            // Close dropdown
+            document.getElementById('customBouquetDropdown').classList.remove('show');
+            document.querySelector('[onclick="toggleDropdown(\'customBouquetDropdown\')"]').classList.remove('active');
         }
         
-        // Initial setup
-        updateCarousel();
-        updateCartDisplay();
-    });
-</script>
+        // Update cart count in the header
+        function updateCartCount() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const cartIcon = document.querySelector('.nav-actions .fa-shopping-cart');
+            
+            if (cartIcon) {
+                const parent = cartIcon.parentElement;
+                const counter = parent.querySelector('.cart-count');
+                
+                if (counter) {
+                    counter.textContent = cartItems.length;
+                } else if (cartItems.length > 0) {
+                    const newCounter = document.createElement('span');
+                    newCounter.className = 'cart-count';
+                    newCounter.textContent = cartItems.length;
+                    newCounter.style.position = 'absolute';
+                    newCounter.style.top = '-5px';
+                    newCounter.style.right = '-5px';
+                    newCounter.style.backgroundColor = '#BE70A7';
+                    newCounter.style.color = 'white';
+                    newCounter.style.fontSize = '12px';
+                    newCounter.style.width = '18px';
+                    newCounter.style.height = '18px';
+                    newCounter.style.borderRadius = '50%';
+                    newCounter.style.display = 'flex';
+                    newCounter.style.alignItems = 'center';
+                    newCounter.style.justifyContent = 'center';
+                    
+                    // Make parent position relative if it's not already
+                    if (window.getComputedStyle(parent).position === 'static') {
+                        parent.style.position = 'relative';
+                    }
+                    
+                    parent.appendChild(newCounter);
+                }
+            }
+        }
+    </script>
 </body>
-</html>
+</html> 
