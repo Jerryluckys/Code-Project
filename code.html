@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fadwas Flowers on Adderley</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<section class="featured-flowers">
+    <div class="section-header">
+        <h2 class="playfair-font">Featured <span class="highlight">Flowers</span></h2>
+        <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="featured-cards">
+        <button class="nav-arrow prev"><i class="fas fa-chevron-left"></i></button>
+        
+        <!-- First Card -->
+        <div class="card">
+            <div class="flower-image">
+                <img src="Assets/Images/Body/Featured/First Card.png" alt="First Card Bouquet">
+            </div>
+            <h3>Lily Lane</h3>
+            <p>A delicate blend of lilies, roses, chrysanthemums, and baby's breath, framed by fresh greenery for timeless beauty.</p>
+            <div class="price">
+                <span class="original">R348.00</span>
+                <span class="discounted">R240.00</span>
+            </div>
+            <div class="quantity-control">
+                <button class="decrease"><i class="fas fa-minus"></i></button>
+                <input type="number" value="1" min="1" class="quantity-input">
+                <button class="increase"><i class="fas fa-plus"></i></button>
+            </div>
+            <button class="add-to-cart" data-id="lily-lane" data-name="Lily Lane" data-price="240.00" data-image="Assets/Images/Body/Featured/First Card.png">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Second Card -->
+        <div class="card">
+            <div class="flower-image">
+                <img src="Assets/Images/Body/Featured/Second Card.png" alt="Second Card Bouquet">
+            </div>
+            <h3>Daisy Dreams</h3>
+            <p>A lively bouquet of colorful daisies with pink, purple, yellow, and peach petals, beautifully arranged against white.</p>
+            <div class="price">
+                <span class="original">R110.00</span>
+                <span class="discounted">R90.00</span>
+            </div>
+            <div class="quantity-control">
+                <button class="decrease"><i class="fas fa-minus"></i></button>
+                <input type="number" value="1" min="1" class="quantity-input">
+                <button class="increase"><i class="fas fa-plus"></i></button>
+            </div>
+            <button class="add-to-cart" data-id="daisy-dreams" data-name="Daisy Dreams" data-price="90.00" data-image="Assets/Images/Body/Featured/Second Card.png">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <!-- Third Card -->
+        <div class="card">
+            <div class="flower-image">
+                <img src="Assets/Images/Body/Featured/Third Card.png" alt="Third Card Bouquet">
+            </div>
+            <h3>Rose Varieties</h3>
+            <p>A vibrant bouquet of red, yellow, and peach roses, beautifully arranged with lush green leaves on white.</p>
+            <div class="price">
+                <span class="original">R245.00</span>
+                <span class="discounted">R179.00</span>
+            </div>
+            <div class="quantity-control">
+                <button class="decrease"><i class="fas fa-minus"></i></button>
+                <input type="number" value="1" min="1" class="quantity-input">
+                <button class="increase"><i class="fas fa-plus"></i></button>
+            </div>
+            <button class="add-to-cart" data-id="rose-varieties" data-name="Rose Varieties" data-price="179.00" data-image="Assets/Images/Body/Featured/Third Card.png">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+
+        <button class="nav-arrow next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Cart Display (Initially Hidden) -->
+    <div id="cart-notification" class="cart-notification">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button id="close-cart"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items will be added here dynamically -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-amount">R0.00</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize cart
+        let cart = JSON.parse(localStorage.getItem('flowerShopCart')) || [];
+        
+        // Quantity control functionality
+        const decreaseButtons = document.querySelectorAll('.decrease');
+        const increaseButtons = document.querySelectorAll('.increase');
+        const quantityInputs = document.querySelectorAll('.quantity-input');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        // Handle decrease button clicks
+        decreaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+                if (value > 1) {
+                    input.value = value - 1;
+                }
+            });
+        });
+        
+        // Handle increase button clicks
+        increaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+                input.value = value + 1;
+            });
+        });
+        
+        // Handle direct input changes
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                if (parseInt(this.value) < 1 || isNaN(parseInt(this.value))) {
+                    this.value = 1;
+                }
+            });
+        });
+        
+        // Add to cart functionality
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Get product details
+                const card = this.closest('.card');
+                const id = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+                const price = parseFloat(this.getAttribute('data-price'));
+                const image = this.getAttribute('data-image');
+                const quantity = parseInt(card.querySelector('.quantity-input').value);
+                
+                // Check if item already exists in cart
+                const existingItemIndex = cart.findIndex(item => item.id === id);
+                
+                if (existingItemIndex !== -1) {
+                    // Update quantity if item exists
+                    cart[existingItemIndex].quantity += quantity;
+                } else {
+                    // Add new item if it doesn't exist
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity
+                    });
+                }
+                
+                // Save cart to local storage
+                localStorage.setItem('flowerShopCart', JSON.stringify(cart));
+                
+                // Show cart notification
+                showCartNotification(name, quantity);
+                
+                // Reset quantity to 1
+                card.querySelector('.quantity-input').value = 1;
+                
+                // Update cart display
+                updateCartDisplay();
+                
+                // Show cart panel on mobile
+                if (window.innerWidth <= 768) {
+                    cartNotification.classList.add('show');
+                }
+            });
+        });
+        
+        // Show cart notification
+        function showCartNotification(productName, quantity) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.classList.add('add-to-cart-notification');
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <p>${quantity} x ${productName} added to cart</p>
+            `;
+            
+            // Append to body
+            document.body.appendChild(notification);
+            
+            // Remove after animation
+            setTimeout(() => {
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
+            }, 10);
+        }
+        
+        // Cart display functionality
+        const cartNotification = document.getElementById('cart-notification');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotalAmount = document.getElementById('cart-total-amount');
+        const closeCartButton = document.getElementById('close-cart');
+        const checkoutButton = document.getElementById('checkout-btn');
+        
+        // Update cart display
+        function updateCartDisplay() {
+            // Clear current items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+                cartTotalAmount.textContent = 'R0.00';
+                return;
+            }
+            
+            // Calculate total
+            let total = 0;
+            
+            // Add items to display
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <div class="cart-item-price">
+                            <span>R${item.price.toFixed(2)} x ${item.quantity}</span>
+                            <span>R${itemTotal.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <button class="remove-item" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(itemElement);
+            });
+            
+            // Update total
+            cartTotalAmount.textContent = `R${total.toFixed(2)}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cart.splice(index, 1);
+                    localStorage.setItem('flowerShopCart', JSON.stringify(cart));
+                    updateCartDisplay();
+                });
+            });
+        }
+        
+        // Event listeners for cart display
+        closeCartButton.addEventListener('click', function() {
+            cartNotification.classList.remove('show');
+        });
+        
+        checkoutButton.addEventListener('click', function() {
+            alert('Proceeding to checkout with ' + cart.length + ' items.');
+            // Here you would typically redirect to a checkout page
+        });
+        
+        // Carousel navigation
+        const prevButton = document.querySelector('.nav-arrow.prev');
+        const nextButton = document.querySelector('.nav-arrow.next');
+        const featuredCards = document.querySelector('.featured-cards');
+        const cards = document.querySelectorAll('.card');
+        
+        // Determine number of visible cards based on screen width
+        function getVisibleCardCount() {
+            if (window.innerWidth >= 1200) return 3; // Desktop: 3 cards
+            if (window.innerWidth >= 768) return 2;  // Tablet: 2 cards
+            return 1; // Mobile: 1 card
+        }
+        
+        let currentPosition = 0;
+        
+        function updateCarousel() {
+            const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginRight);
+            const visibleCards = getVisibleCardCount();
+            const maxPosition = Math.max(0, (cards.length - visibleCards)) * cardWidth;
+            
+            // Ensure current position is valid
+            currentPosition = Math.min(currentPosition, maxPosition);
+            
+            // Apply transform
+            featuredCards.style.transform = `translateX(-${currentPosition}px)`;
+            
+            // Update button states
+            prevButton.disabled = currentPosition === 0;
+            nextButton.disabled = currentPosition >= maxPosition;
+            
+            prevButton.style.opacity = prevButton.disabled ? '0.5' : '1';
+            nextButton.style.opacity = nextButton.disabled ? '0.5' : '1';
+        }
+        
+        prevButton.addEventListener('click', function() {
+            const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginRight);
+            currentPosition = Math.max(0, currentPosition - cardWidth);
+            updateCarousel();
+        });
+        
+        nextButton.addEventListener('click', function() {
+            const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginRight);
+            const visibleCards = getVisibleCardCount();
+            const maxPosition = (cards.length - visibleCards) * cardWidth;
+            currentPosition = Math.min(maxPosition, currentPosition + cardWidth);
+            updateCarousel();
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', updateCarousel);
+        
+        // Show "View Cart" button on mobile
+        if (window.innerWidth <= 768) {
+            const viewCartButton = document.createElement('button');
+            viewCartButton.classList.add('view-cart-mobile');
+            viewCartButton.innerHTML = '<i class="fas fa-shopping-cart"></i> View Cart';
+            document.querySelector('.featured-flowers').appendChild(viewCartButton);
+            
+            viewCartButton.addEventListener('click', function() {
+                cartNotification.classList.add('show');
+            });
+        }
+        
+        // Initial setup
+        updateCarousel();
+        updateCartDisplay();
+    });
+</script>
+</body>
+</html>
